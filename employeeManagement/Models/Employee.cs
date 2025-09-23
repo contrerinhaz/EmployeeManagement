@@ -1,33 +1,24 @@
-using System;
-
 namespace employeeManagement.Models;
 
-public class Employee
+public class Employee : Person
 {
-    public Guid Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string IdentifiyNumber { get; set; }
-    public byte Age { get; set; }
-    public string Position { get; set; }
-    public double Salary { get; set; }
+    public string IdentificationNumber { get; private set; }
+    public string Position { get; private set; }
+    public decimal Salary { get; private set; }
 
-    public Employee(string firstName, string lastName, string identifiyNumber, byte age, string position, double salary)
+    public Employee(string firstName, string lastName, int age, string identificationNumber, string position, decimal salary)
+        : base(firstName, lastName, age)
     {
-        Id = Guid.NewGuid();
-        FirstName = firstName.Trim();
-        LastName = lastName.Trim();
-        IdentifiyNumber = identifiyNumber.Trim();
-        Age = age;
+        IdentificationNumber = identificationNumber.Trim();
         Position = position.Trim();
         Salary = salary;
     }
 
-    private double CalculateBonus() => Salary * 0.10;
+    private decimal CalculateBonus() => Salary * 0.10m;
 
-    public void ShowInfo()
+    public override void ShowInfo()
     {
-        double salaryWithBonus = Salary + CalculateBonus();
-        Console.WriteLine($"Empleado: {FirstName} {LastName}, Edad: {Age}, Cargo: {Position}, Salario con bonificación: {salaryWithBonus:C}");
+        decimal salaryWithBonus = Salary + CalculateBonus();
+        Console.WriteLine($"Employee: {FullName}, Age: {Age}, Position: {Position}, Salary with bonus: {salaryWithBonus:C}");
     }
 }
